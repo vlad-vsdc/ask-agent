@@ -263,10 +263,17 @@ export const useAgentChat = ({ apiKey, demoMode, recordCall }: UseAgentChatOptio
 
         await runRealConversation(nextHistory)
       } catch (caughtError) {
-        const message =
-          caughtError instanceof Error && caughtError.message.includes('API_KEY')
-            ? 'Gemini rejected the API key. Check it in settings.'
-            : 'Could not get a response from Gemini. Check the key, limits, or connection.'
+        const details = caughtError instanceof Error ? caughtError.message : ''
+        const lowerDetails = details.toLowerCase()
+        const isKeyError =
+          lowerDetails.includes('api key') ||
+          lowerDetails.includes('apikey') ||
+          lowerDetails.includes('permission') ||
+          lowerDetails.includes('unauthorized') ||
+          lowerDetails.includes('forbidden')
+        const message = isKeyError
+          ? 'Gemini rejected the API key. Check it in settings.'
+          : `Could not get a response from Gemini. ${details || 'Check the key, limits, or connection.'}`
         setError(message)
         appendMessage({
           id: crypto.randomUUID(),

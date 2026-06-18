@@ -24,6 +24,7 @@ interface GeminiGenerateResponse {
   }>
   error?: {
     message?: string
+    status?: string
   }
 }
 
@@ -99,23 +100,24 @@ export const callGemini = async (
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        system_instruction: {
+        systemInstruction: {
           parts: [{ text: systemInstruction }],
         },
         contents: history,
         tools: [
           {
-            function_declarations: geminiFunctionDeclarations,
+            functionDeclarations: geminiFunctionDeclarations,
           },
         ],
       }),
     },
   )
 
-  const data = (await response.json()) as GeminiGenerateResponse
+  const data = (await response.json().catch(() => ({}))) as GeminiGenerateResponse
 
   if (!response.ok) {
-    throw new Error(data.error?.message ?? 'Gemini API returned an error.')
+    const details = data.error?.message ?? `${response.status} ${response.statusText}`
+    throw new Error(`Gemini API error: ${details}`)
   }
 
   const parts = data.candidates?.[0]?.content?.parts ?? []
