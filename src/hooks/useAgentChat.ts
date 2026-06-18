@@ -271,8 +271,22 @@ export const useAgentChat = ({ apiKey, demoMode, recordCall }: UseAgentChatOptio
           lowerDetails.includes('permission') ||
           lowerDetails.includes('unauthorized') ||
           lowerDetails.includes('forbidden')
+        const isQuotaError =
+          lowerDetails.includes('quota') ||
+          lowerDetails.includes('rate limit') ||
+          lowerDetails.includes('rate-limit') ||
+          lowerDetails.includes('resource_exhausted')
+
+        if (isQuotaError && demoMode) {
+          setError('Gemini quota is exhausted. Demo mode is showing the same tool-use experience.')
+          await runDemoConversation(trimmed)
+          return
+        }
+
         const message = isKeyError
           ? 'Gemini rejected the API key. Check it in settings.'
+          : isQuotaError
+            ? 'Gemini quota is exhausted for this key. Turn on demo mode to view the full tool-use experience.'
           : `Could not get a response from Gemini. ${details || 'Check the key, limits, or connection.'}`
         setError(message)
         appendMessage({
