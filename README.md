@@ -14,19 +14,19 @@ Live demo: `https://your-vercel-demo-url.example`
 
 The main assistant view shows each tool call directly inside the chat before the final answer appears. The analytics sidebar tracks total calls, per-tool usage, success/error counts, average latency, and the most-used tool.
 
-![Ask Agent chat with visible weather and Wikipedia tool calls plus analytics](<C:/Users/volod/OneDrive/Рисунки/Screenshots/Снимок экрана 2026-06-18 204040.png>)
+![Ask Agent chat with visible weather and Wikipedia tool calls plus analytics](docs\screenshots\3.png)
 
 ### Empty State and Suggested Prompts
 
 The first screen is the usable assistant workspace, not a marketing landing page. Suggested prompts help users trigger weather, calculator, and Wikipedia workflows immediately.
 
-![Ask Agent empty state with suggested prompts and analytics sidebar](<C:/Users/volod/OneDrive/Рисунки/Screenshots/Снимок экрана 2026-06-18 203203.png>)
+![Ask Agent empty state with suggested prompts and analytics sidebar](docs\screenshots\1.png)
 
 ### API Key Settings
 
 The Gemini API key is entered through a focused settings modal and stored only in React state for the current tab session.
 
-![Ask Agent Gemini API key settings modal](<C:/Users/volod/OneDrive/Рисунки/Screenshots/Снимок экрана 2026-06-18 203236.png>)
+![Ask Agent Gemini API key settings modal](docs\screenshots\2.png)
 
 ## What It Demonstrates
 
@@ -38,16 +38,16 @@ The Gemini API key is entered through a focused settings modal and stored only i
 
 ## Tech Stack
 
-| Area | Technology |
-| --- | --- |
-| App shell | React 18, TypeScript, Vite |
-| Styling | Tailwind CSS v3 |
-| AI | Gemini API with native function declarations |
-| Weather | Open-Meteo Geocoding API and Forecast API |
-| Knowledge lookup | Russian Wikipedia REST API |
-| Calculator | mathjs, client-side only |
-| Icons | lucide-react |
-| Quality | ESLint, Prettier |
+| Area             | Technology                                   |
+| ---------------- | -------------------------------------------- |
+| App shell        | React 18, TypeScript, Vite                   |
+| Styling          | Tailwind CSS v3                              |
+| AI               | Gemini API with native function declarations |
+| Weather          | Open-Meteo Geocoding API and Forecast API    |
+| Knowledge lookup | Russian Wikipedia REST API                   |
+| Calculator       | mathjs, client-side only                     |
+| Icons            | lucide-react                                 |
+| Quality          | ESLint, Prettier                             |
 
 ## Architecture
 
