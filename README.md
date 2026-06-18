@@ -8,6 +8,26 @@ The product UI, assistant messages, tool explanations, and error states are writ
 
 Live demo: `https://your-vercel-demo-url.example`
 
+## Product Screenshots
+
+### Tool Transparency and Analytics
+
+The main assistant view shows each tool call directly inside the chat before the final answer appears. The analytics sidebar tracks total calls, per-tool usage, success/error counts, average latency, and the most-used tool.
+
+![Ask Agent chat with visible weather and Wikipedia tool calls plus analytics](<C:/Users/volod/OneDrive/Рисунки/Screenshots/Снимок экрана 2026-06-18 204040.png>)
+
+### Empty State and Suggested Prompts
+
+The first screen is the usable assistant workspace, not a marketing landing page. Suggested prompts help users trigger weather, calculator, and Wikipedia workflows immediately.
+
+![Ask Agent empty state with suggested prompts and analytics sidebar](<C:/Users/volod/OneDrive/Рисунки/Screenshots/Снимок экрана 2026-06-18 203203.png>)
+
+### API Key Settings
+
+The Gemini API key is entered through a focused settings modal and stored only in React state for the current tab session.
+
+![Ask Agent Gemini API key settings modal](<C:/Users/volod/OneDrive/Рисунки/Screenshots/Снимок экрана 2026-06-18 203236.png>)
+
 ## What It Demonstrates
 
 - Gemini native function calling with three real tools.
