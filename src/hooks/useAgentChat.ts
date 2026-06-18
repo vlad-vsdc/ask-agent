@@ -66,6 +66,18 @@ const pickDemoScript = (input: string) =>
   Object.entries(demoScripts).find(([, script]) => script.match.test(input)) ??
   (['search_wikipedia', demoScripts.search_wikipedia] as const)
 
+const followUpPrompt = 'What would you like to explore next?'
+
+const withFollowUpPrompt = (answer: string) => {
+  const trimmed = answer.trim()
+
+  if (!trimmed || trimmed.includes(followUpPrompt)) {
+    return trimmed
+  }
+
+  return `${trimmed}\n\n${followUpPrompt}`
+}
+
 export const useAgentChat = ({ apiKey, demoMode, recordCall }: UseAgentChatOptions) => {
   const [messages, setMessages] = useState<ChatMessage[]>([initialAssistantMessage])
   const [isRunning, setIsRunning] = useState(false)
@@ -113,15 +125,17 @@ export const useAgentChat = ({ apiKey, demoMode, recordCall }: UseAgentChatOptio
 
       await sleep(250)
 
-      for (let index = 1; index <= script.answer.length; index += 4) {
+      const demoAnswer = withFollowUpPrompt(script.answer)
+
+      for (let index = 1; index <= demoAnswer.length; index += 4) {
         updateAssistantMessage(assistantId, {
-          content: script.answer.slice(0, index),
+          content: demoAnswer.slice(0, index),
           isStreaming: true,
         })
         await sleep(18)
       }
 
-      updateAssistantMessage(assistantId, { content: script.answer, isStreaming: false })
+      updateAssistantMessage(assistantId, { content: demoAnswer, isStreaming: false })
     },
     [appendMessage, recordCall, updateAssistantMessage],
   )
@@ -139,9 +153,10 @@ export const useAgentChat = ({ apiKey, demoMode, recordCall }: UseAgentChatOptio
           appendMessage({
             id: crypto.randomUUID(),
             role: 'assistant',
-            content:
+            content: withFollowUpPrompt(
               geminiResponse.text.trim() ||
-              'I received an empty response from Gemini. Try rephrasing the question.',
+                'I received an empty response from Gemini. Try rephrasing the question.',
+            ),
           })
           return
         }
